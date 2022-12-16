@@ -39,6 +39,7 @@ public:
 private:
 	LONG     m_cRef;
 	HWND     m_hwnd;
+	int zoom;
 	BOOL     m_bCompositionEnabled;
 	IUnknown* m_pSite;
 	int Current_Hour;

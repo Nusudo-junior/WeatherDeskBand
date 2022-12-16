@@ -99,8 +99,11 @@ STDMETHODIMP CDeskBand::GetBandInfo(DWORD dwBandID, DWORD dwViewMode, DESKBANDIN
     if (pdbi == NULL)
         return E_INVALIDARG;
 
+    SetProcessDPIAware();
+    zoom = GetDpiForSystem() / 96;
+
     if (pdbi->dwMask & DBIM_MINSIZE) {
-        pdbi->ptMinSize.x = 120;
+        pdbi->ptMinSize.x = 122*zoom;
         pdbi->ptMinSize.y = 30;
     }
 
@@ -112,7 +115,7 @@ STDMETHODIMP CDeskBand::GetBandInfo(DWORD dwBandID, DWORD dwViewMode, DESKBANDIN
         pdbi->ptIntegral.y = 1;
 
     if (pdbi->dwMask & DBIM_ACTUAL) {
-        pdbi->ptActual.x = 120;
+        pdbi->ptActual.x = 122*zoom;
         pdbi->ptActual.y = 30;
     }
 
@@ -326,17 +329,18 @@ BOOL CDeskBand::OnPaint(HWND hwnd) {
         RECT Current_temperature = { (RECTWIDTH(rc) / 4) ,0,RECTWIDTH(rc) * 3 / 4 ,RECTHEIGHT(rc) };//left,top,right,bottom
         RECT MAXtemperature = { (RECTWIDTH(rc)*3/4) ,0,RECTWIDTH(rc) ,RECTHEIGHT(rc)/2 };//left,top,right,bottom
         RECT mintemperature = { (RECTWIDTH(rc)*3/4) ,RECTHEIGHT(rc)/2,RECTWIDTH(rc) ,RECTHEIGHT(rc) };//left,top,right,bottom
-        RECT Current_weather= {(RECTWIDTH(rc)/4-32)/2, (RECTHEIGHT(rc)-32)/2, (RECTWIDTH(rc) / 4 - 32) / 2+32, (RECTHEIGHT(rc) - 32) / 2 +32};
+        int iconsize = 32 * zoom;
+        RECT Current_weather= {(RECTWIDTH(rc)/4-iconsize)/2, (RECTHEIGHT(rc)-iconsize)/2, (RECTWIDTH(rc) / 4 - iconsize) / 2+iconsize, (RECTHEIGHT(rc) - iconsize) / 2 +iconsize};
 
         DrawThemeIcon(htheme, hdcPaint, SPP_USERPANE, 0, &Current_weather, weathericons.ImageList, weathericons.codetoindex[_weather.TodaysWeather.weathercode[Current_Hour]]);
-        DrawThemeTextEx(htheme, hdcPaint, SPP_USERPANE, 0, L"-00.0℃", -1, DT_SINGLELINE | DT_CENTER | DT_VCENTER, &Current_temperature, &dttOpts);
+        DrawThemeTextEx(htheme, hdcPaint, SPP_USERPANE, 0, _weather.TodaysWeather.Current_temperature[Current_Hour].c_str(), -1, DT_SINGLELINE | DT_CENTER | DT_VCENTER, &Current_temperature, &dttOpts);
         CloseThemeData(htheme);
 
         htheme = OpenThemeData(NULL, L"TASKBAND");
         dttOpts.crText = RGB(255, 0, 0);
-        DrawThemeTextEx(htheme, hdcPaint, TDP_GROUPCOUNT, 0, L"-00.0", -1, DT_SINGLELINE | DT_CENTER | DT_VCENTER, &MAXtemperature, &dttOpts);
+        DrawThemeTextEx(htheme, hdcPaint, TDP_GROUPCOUNT, 0, _weather.TodaysWeather.Max_temperature.c_str(), -1, DT_SINGLELINE | DT_CENTER | DT_VCENTER, &MAXtemperature, &dttOpts);
         dttOpts.crText = RGB(0, 178, 238);
-        DrawThemeTextEx(htheme, hdcPaint, TDP_GROUPCOUNT, 0, L"-00.0", -1, DT_SINGLELINE | DT_CENTER | DT_VCENTER, &mintemperature, &dttOpts);
+        DrawThemeTextEx(htheme, hdcPaint, TDP_GROUPCOUNT, 0, _weather.TodaysWeather.min_temperature.c_str(), -1, DT_SINGLELINE | DT_CENTER | DT_VCENTER, &mintemperature, &dttOpts);
         
         EndBufferedPaint(hBufferedPaint, TRUE);
         CloseThemeData(htheme);
