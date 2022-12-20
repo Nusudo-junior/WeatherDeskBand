@@ -6,6 +6,7 @@ class Weather
 {
 private:
 	struct data {
+		int date=-1;
 		std::wstring Max_temperature,
 			min_temperature;
 		std::vector<std::wstring> Current_temperature;

@@ -1,4 +1,4 @@
-﻿#include"pch.h"
+﻿#include "pch.h"
 #include <uxtheme.h>
 #include <shlwapi.h>
 #include<Vsstyle.h>
@@ -235,8 +235,6 @@ CDeskBand::CDeskBand()
     m_hwnd = NULL;
     m_bCompositionEnabled = FALSE;
     m_pSite = NULL;
-    Current_Hour = 0;
-    _weather.GetWeather();
     LockModule(TRUE);
 }
 
@@ -281,10 +279,10 @@ LRESULT CALLBACK CDeskBand::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPAR
     case WM_CREATE: {
         LPCREATESTRUCT lpcs = (LPCREATESTRUCT)lParam;
         p = (CDeskBand*)(lpcs->lpCreateParams);
-        p->SetUpdateTimer(hwnd);
         return 0;
     }
     case WM_PAINT: {
+        p->SetUpdateTimer(hwnd);
         p->OnPaint(hwnd);
         return 0;
     }
@@ -356,7 +354,6 @@ BOOL CDeskBand::OnPaint(HWND hwnd) {
 }
 
 BOOL CDeskBand::OnTimer(HWND hwnd) {
-    SetUpdateTimer(hwnd);
     InvalidateRect(hwnd, NULL, FALSE);
     UpdateWindow(hwnd);
     return 0;
@@ -368,7 +365,7 @@ BOOL CDeskBand::SetUpdateTimer(HWND hwnd) {
     localtime_s(&localTime, &t);
     int nextupdate = 60 - localTime.tm_min;
     Current_Hour = localTime.tm_hour;
-    if(Current_Hour==0)_weather.GetWeather();
+    if(_weather.TodaysWeather.date!=localTime.tm_yday)_weather.GetWeather();
     SetTimer(hwnd, TIMER_ID, nextupdate*60*1000, NULL);
     return true;
 }

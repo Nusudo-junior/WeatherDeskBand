@@ -12,6 +12,10 @@ void Weather::GetWeather() {
     {
         auto body = response.extract_string().get();
         auto json = json::parse(body);
+        time_t unix_date = json["daily"]["time"][0];
+        struct tm local_date;
+        localtime_s(&local_date, &unix_date);
+        TodaysWeather.date = local_date.tm_yday;
         TCHAR buf[8];
         swprintf_s(buf, sizeof(buf) / sizeof(wchar_t), L"%4.1f", (float)json["daily"]["temperature_2m_max"][0]);
         TodaysWeather.Max_temperature = buf;
