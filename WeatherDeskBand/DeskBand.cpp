@@ -290,6 +290,11 @@ LRESULT CALLBACK CDeskBand::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPAR
         p->OnTimer(hwnd);
         return 0;
     }
+    case WM_POWERBROADCAST: {
+        if (wParam == PBT_APMRESUMEAUTOMATIC)
+            p->OnTimer(hwnd);
+        return 0;
+    }
     case WM_THEMECHANGED:
         p->m_bCompositionEnabled = !p->m_bCompositionEnabled;
         break;
