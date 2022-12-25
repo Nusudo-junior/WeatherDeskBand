@@ -4,6 +4,8 @@
 #include <shlwapi.h>
 #include "CClassFactory.h"
 #include"ClsId.h"
+#include <stdio.h>
+
 
 #pragma comment (lib, "Shlwapi.lib")
 

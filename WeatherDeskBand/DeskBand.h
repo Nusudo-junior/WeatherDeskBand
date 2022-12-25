@@ -33,10 +33,11 @@ public:
 	~CDeskBand();
 	BOOL RegisterAndCreateWindow(HWND hwndParent);
 	BOOL OnPaint(HWND hwnd);
-	BOOL OnTimer(HWND hwnd);
+	BOOL UpdateBand(HWND hwnd);
 	BOOL SetUpdateTimer(HWND hwnd);
 	static LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 private:
+
 	LONG     m_cRef;
 	HWND     m_hwnd;
 	int zoom;

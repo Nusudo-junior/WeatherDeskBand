@@ -72,6 +72,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <GenerateManifest>false</GenerateManifest>
+    <CopyLocalDebugSymbols>false</CopyLocalDebugSymbols>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -153,6 +154,7 @@
     <ClInclude Include="DeskBand.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="ImageList.h" />
+    <ClInclude Include="OutputLog.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Weather.h" />
   </ItemGroup>

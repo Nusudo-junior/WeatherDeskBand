@@ -9,6 +9,8 @@
 #include"ImageList.h"
 #include"Weather.h"
 #include<iostream>
+#include <fstream>
+#include"OutputLog.h"
 
 #define ID_BANDWINDOW 100
 #define TIMER_ID 1
@@ -274,6 +276,7 @@ BOOL CDeskBand::RegisterAndCreateWindow(HWND hwndParent)
 LRESULT CALLBACK CDeskBand::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
     static CDeskBand* p = NULL;
+
     switch (uMsg) {
 
     case WM_CREATE: {
@@ -286,13 +289,12 @@ LRESULT CALLBACK CDeskBand::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPAR
         p->OnPaint(hwnd);
         return 0;
     }
-    case WM_TIMER: {
-        p->OnTimer(hwnd);
-        return 0;
+    case WM_LBUTTONDOWN: {
+        p->_weather.GetWeather();
+        p->UpdateBand(hwnd);
     }
-    case WM_POWERBROADCAST: {
-        if (wParam == PBT_APMRESUMEAUTOMATIC)
-            p->OnTimer(hwnd);
+    case WM_TIMER: {
+        p->UpdateBand(hwnd);
         return 0;
     }
     case WM_THEMECHANGED:
@@ -302,10 +304,8 @@ LRESULT CALLBACK CDeskBand::WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPAR
         return 0;
     case WM_ERASEBKGND:
         return 0;
-
     default:
         break;
-
     }
     return DefWindowProc(hwnd, uMsg, wParam, lParam);
 }
@@ -334,9 +334,14 @@ BOOL CDeskBand::OnPaint(HWND hwnd) {
         RECT mintemperature = { (RECTWIDTH(rc)*3/4) ,RECTHEIGHT(rc)/2,RECTWIDTH(rc) ,RECTHEIGHT(rc) };//left,top,right,bottom
         int iconsize = 32 * zoom;
         RECT Current_weather= {(RECTWIDTH(rc)/4-iconsize)/2, (RECTHEIGHT(rc)-iconsize)/2, (RECTWIDTH(rc) / 4 - iconsize) / 2+iconsize, (RECTHEIGHT(rc) - iconsize) / 2 +iconsize};
-
-        DrawThemeIcon(htheme, hdcPaint, SPP_USERPANE, 0, &Current_weather, weathericons.ImageList, weathericons.codetoindex[_weather.TodaysWeather.weathercode[Current_Hour]]);
-        DrawThemeTextEx(htheme, hdcPaint, SPP_USERPANE, 0, _weather.TodaysWeather.Current_temperature[Current_Hour].c_str(), -1, DT_SINGLELINE | DT_CENTER | DT_VCENTER, &Current_temperature, &dttOpts);
+        try {
+            DrawThemeIcon(htheme, hdcPaint, SPP_USERPANE, 0, &Current_weather, weathericons.ImageList, weathericons.codetoindex[_weather.TodaysWeather.weathercode[Current_Hour]]);
+            DrawThemeTextEx(htheme, hdcPaint, SPP_USERPANE, 0, _weather.TodaysWeather.Current_temperature[Current_Hour].c_str(), -1, DT_SINGLELINE | DT_CENTER | DT_VCENTER, &Current_temperature, &dttOpts);
+        }
+        catch (std::out_of_range& oor) {
+            DrawThemeTextEx(htheme, hdcPaint, SPP_USERPANE, 0, L"ERR", -1, DT_SINGLELINE | DT_CENTER | DT_VCENTER, &Current_temperature, &dttOpts);
+            OutputLog(oor);
+        }
         CloseThemeData(htheme);
 
         htheme = OpenThemeData(NULL, L"TASKBAND");
@@ -358,7 +363,7 @@ BOOL CDeskBand::OnPaint(HWND hwnd) {
     return 0;
 }
 
-BOOL CDeskBand::OnTimer(HWND hwnd) {
+BOOL CDeskBand::UpdateBand(HWND hwnd) {
     InvalidateRect(hwnd, NULL, FALSE);
     UpdateWindow(hwnd);
     return 0;
@@ -370,7 +375,8 @@ BOOL CDeskBand::SetUpdateTimer(HWND hwnd) {
     localtime_s(&localTime, &t);
     int nextupdate = 60 - localTime.tm_min;
     Current_Hour = localTime.tm_hour;
-    if(_weather.TodaysWeather.date!=localTime.tm_yday)_weather.GetWeather();
+    if(_weather.TodaysWeather.date!=localTime.tm_yday||Current_Hour%6==0)
+    _weather.GetWeather();
     SetTimer(hwnd, TIMER_ID, nextupdate*60*1000, NULL);
     return true;
 }

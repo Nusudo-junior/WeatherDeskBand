@@ -2,6 +2,7 @@
 #include<string>
 #include<vector>
 #include<iostream>
+
 class Weather
 {
 private:
