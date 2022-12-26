@@ -18,7 +18,7 @@ inline void OutputLog(auto e) {
 		, ext[MAX_PATH + 1];
 	_splitpath_s(path, drive, dir, fname, ext);
 	std::ofstream writing_file;
-	std::string filename = std::format("{}{}/images/log.txt", drive, dir);
+	std::string filename = std::format("{}{}/log.txt", drive, dir);
 	writing_file.open(filename, std::ios::app);
 	std::string errlog = std::format("{}-{}-{} {}:{}:{} Error:{}",
 		localTime.tm_year + 1900,
