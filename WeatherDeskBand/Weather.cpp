@@ -7,11 +7,15 @@
 
 using json = nlohmann::json;
 
+void Weather::SetURL(std::wstring url) {
+	base = url;
+}
+
 void Weather::GetWeather() {
     try {
 		web::http::client::http_client_config config;
 		config.set_timeout(utility::seconds(5));
-		web::http::client::http_client client(base,config);
+		web::http::client::http_client client(base.c_str(), config);
 		auto response = client.request(web::http::methods::GET).get();
 		if (response.status_code() == web::http::status_codes::OK)
 		{
