@@ -43,6 +43,8 @@ Windows10 x64
 ## 問い合わせ先
 Mail:u849256c\[at\]ecs.osaka-u.ac.jp
 
+## ライセンス
+MIT
 ## 参考
 以下のサイト，コードを参考にさせていただきました．
 - https://learn.microsoft.com/ja-jp/windows/win32/shell/band-objects
