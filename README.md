@@ -35,6 +35,14 @@ Daily Weather Variablesには"Maximum Temperature (2 m)"，"Minimum Temperature 
 ## 動作確認環境
 Windows10 x64
 
+## ビルド環境
+- Visual Studio 2022
+- cpprestsdk 2.10.18
+- lohmann.json.decomposed 3.11.2
+
+## 問い合わせ先
+Mail:u849256c\[at\]ecs.osaka-u.ac.jp
+
 ## 参考
 以下のサイト，コードを参考にさせていただきました．
 - https://learn.microsoft.com/ja-jp/windows/win32/shell/band-objects
