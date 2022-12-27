@@ -31,14 +31,14 @@ Daily Weather Variablesには"Maximum Temperature (2 m)"，"Minimum Temperature 
 <img src="https://user-images.githubusercontent.com/106300228/209653605-997897b9-799c-4608-b0b5-9fb4c37efbd7.jpg" alter="xml" width="60%" height="60%" >
 
 ### 天気アイコンの変更
-　作成した天気アイコンをimagesに置く．アイコンを変更したいWeatherCodeに対応するIcon要素のfilename属性値を変更する．
+　作成した天気アイコンをimagesに置く．WeatherDeskBand.xml内のアイコンを変更したいWeatherCodeに対応するIcon要素のfilename属性値を変更する．
 ## 動作確認環境
 Windows10 x64
 
 ## ビルド環境
 - Visual Studio 2022
 - cpprestsdk 2.10.18
-- lohmann.json.decomposed 3.11.2
+- nlohmann.json.decomposed 3.11.2
 
 ## 問い合わせ先
 Mail:u849256c\[at\]ecs.osaka-u.ac.jp
