@@ -154,6 +154,7 @@
     <ClInclude Include="DeskBand.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="ImageList.h" />
+    <ClInclude Include="ImportConfig.h" />
     <ClInclude Include="OutputLog.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Weather.h" />
@@ -163,6 +164,7 @@
     <ClCompile Include="DeskBand.cpp" />
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="ImageList.cpp" />
+    <ClCompile Include="ImportConfig.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

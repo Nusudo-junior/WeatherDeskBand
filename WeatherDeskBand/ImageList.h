@@ -4,20 +4,19 @@
 #include<uxtheme.h>
 #include<vector>
 #include<map>
+#include<utility>
+#include<string>
 
 extern HINSTANCE g_hinstDll;
 
 class Images {
 public:
-	Images();
+	void MakeImageList();
 	HIMAGELIST ImageList;
+	void SetFileList(std::vector<std::pair<int,std::wstring>> filenames);
 	std::map<int, int> codetoindex;
 private:
-	struct codeandfile {
-		int weathercode;
-		LPCWSTR filename;
-	};
-	std::vector<codeandfile>files = 
+	std::vector<std::pair<int, std::wstring>>files;/* =
 	{
 		{0,L"sunny"},{1,L"sunny"},{2,L"partlycloudy"},{3,L"cloudy"},
 		{45,L"fog"},{48,L"fog"},
@@ -28,5 +27,5 @@ private:
 		{95,L"thunderstorm"},{96,L"thunderstorm_hail"},{99,L"thunderstorm_hail"},
 		{100,L"moon"},{101,L"moon"},{102,L"moonpartly"},
 		{-1,L"None"}
-	};
+	};*/
 };

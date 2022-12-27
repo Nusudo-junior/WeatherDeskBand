@@ -11,6 +11,7 @@
 #include<iostream>
 #include <fstream>
 #include"OutputLog.h"
+#include"ImportConfig.h"
 
 #define ID_BANDWINDOW 100
 #define TIMER_ID 1
@@ -237,6 +238,10 @@ CDeskBand::CDeskBand()
     m_hwnd = NULL;
     m_bCompositionEnabled = FALSE;
     m_pSite = NULL;
+    ImportConfig Importconfig;
+    weathericons.SetFileList(Importconfig.filenames);
+    weathericons.MakeImageList();
+    _weather.SetURL(Importconfig.URL);
     LockModule(TRUE);
 }
 
