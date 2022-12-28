@@ -3,7 +3,7 @@
 
 Open-Meteoから天気を取ってきて表示するやつです．
 
-![sample](https://user-images.githubusercontent.com/106300228/209650753-2f1b4a70-b3de-487a-b88e-98a0eccc9f95.jpg)
+![sample](https://user-images.githubusercontent.com/106300228/209774652-f477dbae-8592-4dd2-9acc-84e0fafea9b3.jpg)
 
 Open-Meteo: https://open-meteo.com/en
 
