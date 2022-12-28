@@ -8,7 +8,7 @@ Display the weather forecast provided by Open-Meteo on your taskbar.
 Open-Meteo: https://open-meteo.com/en
 
 ## Description
-This is a deskband to display the current weather and temperature and today's high and low prvided by Open-Meteo. 
+This is a deskband to display the current weather and temperature and today's high and low provided by Open-Meteo. 
 The weather forecast is updated every 6 hours from midnight. You can also update it by clicking the deskband.
 
 ## Usage
