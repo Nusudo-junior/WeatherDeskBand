@@ -1,7 +1,7 @@
 # WeatherDeskBand
 [Japanese](https://github.com/Nusudo-junior/WeatherDeskBand/blob/master/README_ja.md)
 
-Display the weather forecast prvided by Open-Meteo on your taskbar. 
+Display the weather forecast provided by Open-Meteo on your taskbar. 
 
 ![sample](https://user-images.githubusercontent.com/106300228/209774652-f477dbae-8592-4dd2-9acc-84e0fafea9b3.jpg)
 
