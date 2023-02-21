@@ -1,4 +1,5 @@
 ﻿#include "pch.h"
+#include <algorithm>
 #include <uxtheme.h>
 #include <shlwapi.h>
 #include<Vsstyle.h>
@@ -338,10 +339,11 @@ BOOL CDeskBand::OnPaint(HWND hwnd) {
         RECT MAXtemperature = { (RECTWIDTH(rc)*3/4) ,0,RECTWIDTH(rc) ,RECTHEIGHT(rc)/2 };//left,top,right,bottom
         RECT mintemperature = { (RECTWIDTH(rc)*3/4) ,RECTHEIGHT(rc)/2,RECTWIDTH(rc) ,RECTHEIGHT(rc) };//left,top,right,bottom
         int iconsize = 32 * zoom;
-        RECT Current_weather= {(RECTWIDTH(rc)/4-iconsize)/2, (RECTHEIGHT(rc)-iconsize)/2, (RECTWIDTH(rc) / 4 - iconsize) / 2+iconsize, (RECTHEIGHT(rc) - iconsize) / 2 +iconsize};
+        RECT Current_weather= {(RECTWIDTH(rc)/4-iconsize)/2, (RECTHEIGHT(rc)-iconsize)/2, (RECTWIDTH(rc) / 4 - iconsize) / 2+iconsize, (RECTHEIGHT(rc) - iconsize) / 2 +iconsize}; 
         try {
-            DrawThemeIcon(htheme, hdcPaint, SPP_USERPANE, 0, &Current_weather, weathericons.ImageList, weathericons.codetoindex[_weather.TodaysWeather.weathercode[Current_Hour]]);
-            DrawThemeTextEx(htheme, hdcPaint, SPP_USERPANE, 0, _weather.TodaysWeather.Current_temperature[Current_Hour].c_str(), -1, DT_SINGLELINE | DT_CENTER | DT_VCENTER, &Current_temperature, &dttOpts);
+            int Index = min(Current_Hour, _weather.TodaysWeather.Current_temperature.size()-1);
+            DrawThemeIcon(htheme, hdcPaint, SPP_USERPANE, 0, &Current_weather, weathericons.ImageList, weathericons.codetoindex[_weather.TodaysWeather.weathercode[Index]]);
+            DrawThemeTextEx(htheme, hdcPaint, SPP_USERPANE, 0, _weather.TodaysWeather.Current_temperature[Index].c_str(), -1, DT_SINGLELINE | DT_CENTER | DT_VCENTER, &Current_temperature, &dttOpts);
         }
         catch (std::out_of_range& oor) {
             DrawThemeTextEx(htheme, hdcPaint, SPP_USERPANE, 0, L"ERR", -1, DT_SINGLELINE | DT_CENTER | DT_VCENTER, &Current_temperature, &dttOpts);
