@@ -61,7 +61,15 @@ void Weather::GetWeather() {
 		struct tm localTime;
 		localtime_s(&localTime, &t);
 		if (localTime.tm_yday == TodaysWeather.date)return;
-
+		else {
+			TodaysWeather.Current_temperature.clear();
+			TodaysWeather.weathercode.clear();
+			TodaysWeather.Current_temperature.emplace_back(L"Offline");
+			TodaysWeather.weathercode.emplace_back(-1);
+			TodaysWeather.Max_temperature = L"";
+			TodaysWeather.min_temperature = L"";
+			return;
+		}
 		OutputLog(e);
     }
 }
